@@ -7,16 +7,29 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'styleslot',
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+// Railway provides a single connection URL (DATABASE_URL or MYSQL_URL).
+// Fall back to individual env vars for local development.
+const connectionUri = process.env.DATABASE_URL || process.env.MYSQL_URL;
+
+const poolConfig = connectionUri
+  ? {
+      uri: connectionUri,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    }
+  : {
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_NAME || 'styleslot',
+      port: process.env.DB_PORT || 3306,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    };
+
+const pool = mysql.createPool(poolConfig);
 
 // Quick connectivity check on startup — helps surface config
 // mistakes immediately instead of failing silently on first request.
