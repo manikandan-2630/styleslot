@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StyleSlot — Book Your Style, Instantly</title>
+<meta name="description" content="StyleSlot - Premium salon appointment booking. Reserve your appointment in just a few clicks." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Ambient background layers -->
+<div class="bg-noise"></div>
+<div class="bg-glow bg-glow--one"></div>
+<div class="bg-glow bg-glow--two"></div>
+
+<!-- ================= HEADER / BRAND ================= -->
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">
+      <span class="brand-mark__letter">S</span>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">StyleSlot</span>
+      <span class="brand-divider"></span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <p class="hero-eyebrow">Premium Salon &amp; Grooming Studio</p>
+  <h1 class="hero-title">Book Your Style,<br><span class="hero-title__accent">Instantly</span></h1>
+  <p class="hero-subtitle">Reserve your appointment in just a few clicks.</p>
+  <a href="#booking-form" class="hero-cta">
+    <span>Reserve Your Slot</span>
+    <i class="fa-solid fa-arrow-down"></i>
+  </a>
+</section>
+
+<!-- ================= BOOKING FORM ================= -->
+<main class="booking-wrap" id="booking-form">
+  <form class="booking-card" id="appointmentForm" novalidate>
+
+    <div class="card-header">
+      <h2>Reserve Your Appointment</h2>
+      <p>Fill in your details below — our stylists will be ready for you.</p>
+    </div>
+
+    <!-- ---------- Personal Details ---------- -->
+    <fieldset class="form-section">
+      <legend><i class="fa-solid fa-user"></i> Personal Details</legend>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" placeholder="e.g. Aanya Sharma" autocomplete="name" />
+          <span class="error-msg" id="err-fullName"></span>
+        </div>
+
+        <div class="field">
+          <label for="mobile">Mobile Number</label>
+          <input type="tel" id="mobile" name="mobile" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" autocomplete="tel" />
+          <span class="error-msg" id="err-mobile"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
+          <span class="error-msg" id="err-email"></span>
+        </div>
+
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender">
+            <option value="" disabled selected>Select gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+          <span class="error-msg" id="err-gender"></span>
+        </div>
+
+        <div class="field">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" placeholder="e.g. 28" min="1" max="120" />
+          <span class="error-msg" id="err-age"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- ---------- Appointment Details ---------- -->
+    <fieldset class="form-section">
+      <legend><i class="fa-solid fa-scissors"></i> Appointment Details</legend>
+
+      <div class="field-grid">
+        <div class="field">
+          <label for="service">Select Service</label>
+          <select id="service" name="service">
+            <option value="" disabled selected>Choose a service</option>
+            <option value="Hair Cut &amp; Styling">Hair Cut &amp; Styling</option>
+            <option value="Hair Color &amp; Highlights">Hair Color &amp; Highlights</option>
+            <option value="Keratin &amp; Smoothening">Keratin &amp; Smoothening</option>
+            <option value="Bridal Makeover">Bridal Makeover</option>
+            <option value="Facial &amp; Cleanup">Facial &amp; Cleanup</option>
+            <option value="Manicure &amp; Pedicure">Manicure &amp; Pedicure</option>
+            <option value="Beard &amp; Shave">Beard &amp; Shave</option>
+            <option value="Spa &amp; Massage">Spa &amp; Massage</option>
+          </select>
+          <span class="error-msg" id="err-service"></span>
+        </div>
+
+        <div class="field">
+          <label for="stylist">Preferred Stylist</label>
+          <select id="stylist" name="stylist">
+            <option value="" disabled selected>Any preference?</option>
+            <option value="No Preference">No Preference</option>
+            <option value="Meera Kapoor">Meera Kapoor</option>
+            <option value="Rohan Verma">Rohan Verma</option>
+            <option value="Alisha D'Souza">Alisha D'Souza</option>
+            <option value="Karan Mehta">Karan Mehta</option>
+          </select>
+          <span class="error-msg" id="err-stylist"></span>
+        </div>
+
+        <div class="field">
+          <label for="appointmentDate">Appointment Date</label>
+          <input type="date" id="appointmentDate" name="appointmentDate" />
+          <span class="error-msg" id="err-appointmentDate"></span>
+        </div>
+
+        <div class="field">
+          <label for="appointmentTime">Preferred Time</label>
+          <input type="time" id="appointmentTime" name="appointmentTime" />
+          <span class="error-msg" id="err-appointmentTime"></span>
+        </div>
+
+        <div class="field">
+          <label for="branch">Branch / Location</label>
+          <select id="branch" name="branch">
+            <option value="" disabled selected>Select a branch</option>
+            <option value="StyleSlot — Bandra West">StyleSlot — Bandra West</option>
+            <option value="StyleSlot — Koramangala">StyleSlot — Koramangala</option>
+            <option value="StyleSlot — Connaught Place">StyleSlot — Connaught Place</option>
+            <option value="StyleSlot — Banjara Hills">StyleSlot — Banjara Hills</option>
+          </select>
+          <span class="error-msg" id="err-branch"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- ---------- Additional Details ---------- -->
+    <fieldset class="form-section">
+      <legend><i class="fa-solid fa-note-sticky"></i> Additional Details</legend>
+
+      <div class="field field--full">
+        <label for="specialRequest">Special Request <span class="optional-tag">(optional)</span></label>
+        <textarea id="specialRequest" name="specialRequest" rows="3" placeholder="Anything our stylists should know in advance?"></textarea>
+      </div>
+
+      <div class="field field--full">
+        <label>Payment Method</label>
+        <div class="radio-group" id="paymentMethodGroup">
+          <label class="radio-pill">
+            <input type="radio" name="paymentMethod" value="Cash" />
+            <span><i class="fa-solid fa-money-bill-wave"></i> Cash</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="paymentMethod" value="UPI" />
+            <span><i class="fa-solid fa-mobile-screen"></i> UPI</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="paymentMethod" value="Card" />
+            <span><i class="fa-solid fa-credit-card"></i> Card</span>
+          </label>
+        </div>
+        <span class="error-msg" id="err-paymentMethod"></span>
+      </div>
+
+      <div class="field field--full">
+        <label class="checkbox-line">
+          <input type="checkbox" id="termsAccepted" name="termsAccepted" />
+          <span>I agree to the <a href="#" class="inline-link" id="termsLink">Terms &amp; Conditions and Cancellation Policy</a>.</span>
+        </label>
+        <span class="error-msg" id="err-termsAccepted"></span>
+      </div>
+    </fieldset>
+
+    <button type="submit" class="submit-btn" id="submitBtn">
+      <span class="submit-btn__label">Book Appointment</span>
+      <span class="submit-btn__spinner" aria-hidden="true"></span>
+    </button>
+
+    <p class="form-footnote"><i class="fa-solid fa-lock"></i> Your details are safe with us and used only to confirm your appointment.</p>
+  </form>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="year"></span> StyleSlot. Crafted for the modern grooming experience.</p>
+</footer>
+
+<!-- ================= SUCCESS MODAL ================= -->
+<div class="modal-overlay" id="successOverlay">
+  <div class="success-modal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="success-modal__check">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <h2 id="successTitle">Appointment Booked Successfully</h2>
+    <p class="success-modal__booking-label">Your Booking ID</p>
+    <p class="success-modal__booking-id" id="modalBookingId">STS000000</p>
+
+    <div class="success-modal__summary" id="modalSummary"></div>
+
+    <p class="success-modal__thanks">Thank you for choosing StyleSlot. We look forward to styling you.</p>
+
+    <div class="success-modal__actions">
+      <button type="button" class="btn-secondary" id="bookAnotherBtn">Book Another Appointment</button>
+      <button type="button" class="btn-primary" id="closeModalBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
