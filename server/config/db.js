@@ -8,14 +8,25 @@ require('dotenv').config();
 const mysql = require('mysql2/promise');
 
 // Railway provides both a connection URL (DATABASE_URL) and individual vars
-// (DB_HOST, DB_USER, etc.). The DATABASE_URL often uses an internal hostname
-// (mysql.railway.internal) which may not resolve. Prefer individual vars.
-const hasIndividualVars = process.env.DB_HOST || process.env.MYSQLHOST;
+// (DB_HOST, DB_USER, etc.). The DATABASE_URL and MYSQLHOST often use an internal hostname
+// (mysql.railway.internal) which may not resolve. We should prefer MYSQL_PUBLIC_URL first.
+const publicUrl = process.env.MYSQL_PUBLIC_URL;
+const connectionUri = publicUrl || process.env.DATABASE_URL || process.env.MYSQL_URL;
 
 let pool;
 
-if (hasIndividualVars) {
-  // Use individual env vars (works with both public and private hostnames)
+if (connectionUri) {
+  // Use connection string (preferring MYSQL_PUBLIC_URL)
+  pool = mysql.createPool({
+    uri: connectionUri,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ssl: { rejectUnauthorized: false } // Required for Railway public connections
+  });
+  console.log('🔌 Using connection URL for MySQL (Public URL preferred).');
+} else if (process.env.DB_HOST || process.env.MYSQLHOST) {
+  // Fallback to individual env vars
   pool = mysql.createPool({
     host: process.env.MYSQLHOST || process.env.DB_HOST || 'localhost',
     user: process.env.MYSQLUSER || process.env.DB_USER || 'root',
