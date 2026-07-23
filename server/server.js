@@ -13,8 +13,17 @@ const appointmentRoutes = require('./routes/appointmentRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Middleware — allow Vercel frontend to call this API
+app.use(cors({
+  origin: [
+    'https://styleslot-sage.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5500'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
