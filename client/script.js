@@ -210,7 +210,7 @@ form.addEventListener('submit', async (e) => {
   setLoading(true);
 
   try {
-    const response = await fetch('/api/appointments', {
+    const response = await fetch('https://styleslot-production.up.railway.app/api/appointments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
