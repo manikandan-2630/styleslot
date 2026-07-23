@@ -27,8 +27,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve the static frontend (client folder)
-app.use(express.static(path.join(__dirname, '..', 'client')));
+// NOTE: Frontend is deployed separately on Vercel.
+// This server is a pure API backend.
 
 // API routes
 app.use('/api/appointments', appointmentRoutes);
@@ -70,9 +70,9 @@ app.get('/api/debug', async (req, res) => {
   });
 });
 
-// Fallback to index.html for the single-page app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
+// 404 handler for unknown routes
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: 'Route not found.' });
 });
 
 // Centralized error handler
