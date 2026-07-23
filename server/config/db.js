@@ -7,29 +7,36 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-// Railway provides a single connection URL (DATABASE_URL or MYSQL_URL).
-// Fall back to individual env vars for local development.
+// Railway provides a connection URL (DATABASE_URL or MYSQL_URL).
+// It also provides individual vars: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT.
+// Fall back to DB_HOST etc. for local development.
 const connectionUri = process.env.DATABASE_URL || process.env.MYSQL_URL;
 
-const poolConfig = connectionUri
-  ? {
-      uri: connectionUri,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0
-    }
-  : {
-      host: process.env.DB_HOST || 'localhost',
-      user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_NAME || 'styleslot',
-      port: process.env.DB_PORT || 3306,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0
-    };
+let pool;
 
-const pool = mysql.createPool(poolConfig);
+if (connectionUri) {
+  // mysql2 accepts the connection string directly as a string argument
+  pool = mysql.createPool({
+    uri: connectionUri,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ssl: { rejectUnauthorized: false }
+  });
+  console.log('🔌 Using DATABASE_URL/MYSQL_URL for MySQL connection.');
+} else {
+  pool = mysql.createPool({
+    host: process.env.MYSQLHOST || process.env.DB_HOST || 'localhost',
+    user: process.env.MYSQLUSER || process.env.DB_USER || 'root',
+    password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || '',
+    database: process.env.MYSQLDATABASE || process.env.DB_NAME || 'styleslot',
+    port: process.env.MYSQLPORT || process.env.DB_PORT || 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+  });
+  console.log('🔌 Using individual DB env vars for MySQL connection.');
+}
 
 // Quick connectivity check on startup — helps surface config
 // mistakes immediately instead of failing silently on first request.
